@@ -21,7 +21,10 @@ Template.createRoom.events = {
 
 Template.room.helpers({
   canDelete: function() {
-    return this.owner == Meteor.user()._id;
+    if (Meteor.user() != null) {
+      return this.owner == Meteor.user()._id;
+    }
+    return false;
   }
 })
 
