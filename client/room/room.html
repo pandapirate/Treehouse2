@@ -1,0 +1,15 @@
+<template name="createRoom">
+  <p>
+    <button class="createRoomButton">Create Room</button>
+  </p>
+</template>
+
+<template name="rooms">
+    {{#each chatrooms}}
+      {{> room}}
+    {{/each}}
+</template>
+
+<template name="room">
+  <p><i class="fa fa-cloud"></i> {{name}} <button class="selectRoom">Join</button></p>
+</template>

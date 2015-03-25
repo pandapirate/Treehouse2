@@ -1,0 +1,38 @@
+<head>
+  <title>Treehouse 2.0</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    {{> loginButtons}}<br>
+    <h1>Treehouse 2.0</h1>
+
+    {{> welcome }}
+
+    {{#if selectedRoom}}
+      <p>
+        Currently Room: {{currentRoom}}
+      </p>
+      <button class="leaveRoom">Leave Room</button><br/><br>
+      {{> messages }}
+      {{> input }}
+    {{else}}
+      {{> createRoom}}
+      {{> rooms}}
+    {{/if}}
+  </div>
+</body>
+
+<template name="welcome">
+  {{#if currentUser}}
+  <p>
+    Welcome {{currentUser.profile.name}}
+  </p>
+  {{else}}
+  <p>
+    Please login to post as yourself or post as Squirrel
+  </p>
+  {{/if}}
+</template>

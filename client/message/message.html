@@ -1,0 +1,24 @@
+<template name="messages">
+  <ul class="fa-ul">
+    {{#each parentMessages}}
+      {{> msg}}
+    {{/each}}
+  </ul>
+</template>
+
+<template name="msg">
+  <li id={{_id}}><i class="toggle fa {{listClass}}"></i><strong>{{name}}:</strong> {{message}} <i class="fa fa-reply response"></i></li>
+  {{#if hasResponse}}
+    <li><i class="fa fa-arrow-right"></i><input type="text" id="ResponseMessage"><button id="ResponseButton">Submit</button></li>
+  {{/if}}
+
+  {{#if hasChildren}}
+    {{#if showChildren}}
+      <ul class="fa-ul">
+        {{#each children}}
+          {{> msg}}
+        {{/each}}
+      </ul>
+    {{/if}}
+  {{/if}}
+</template>
