@@ -13,10 +13,17 @@ Template.createRoom.events = {
     }
 
     Rooms.insert({
-      name: newRoomName
+      name: newRoomName,
+      owner: Meteor.user()._id
     });
   }
 }
+
+Template.room.helpers({
+  canDelete: function() {
+    return this.owner == Meteor.user()._id;
+  }
+})
 
 Template.room.events = {
   "click .selectRoom": function() {

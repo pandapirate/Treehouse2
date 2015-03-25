@@ -7,6 +7,9 @@ Template.body.helpers({
   },
   currentRoom: function() {
     return Session.get("currentRoom");
+  },
+  currentUser: function() {
+    return Meteor.user() != null;
   }
 })
 

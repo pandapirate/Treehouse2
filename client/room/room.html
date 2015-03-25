@@ -14,6 +14,8 @@
   <p>
     <i class="fa fa-cloud"></i> {{name}}
     <button class="selectRoom">Join</button>
-    <button class="deleteRoom">Delete</button>
+    {{#if canDelete}}
+      <button class="deleteRoom">Delete</button>
+    {{/if}}
   </p>
 </template>

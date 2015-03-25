@@ -12,13 +12,19 @@
 
     {{#if selectedRoom}}
       <p>
-        Currently Room: {{currentRoom}}
+        Room: {{currentRoom}}
       </p>
       <button class="leaveRoom">Leave Room</button><br/><br>
       {{> messages }}
       {{> input }}
     {{else}}
-      {{> createRoom}}
+      {{#if currentUser}}
+        {{> createRoom}}
+      {{else}}
+        <p>
+          Login to create new room
+        </p>
+      {{/if}}
       {{> rooms}}
     {{/if}}
   </div>
@@ -31,7 +37,7 @@
   </p>
   {{else}}
   <p>
-    Please login to post as yourself or post as Squirrel
+    Please login to post as yourself or post as Squirrel.
   </p>
   {{/if}}
 </template>
