@@ -8,7 +8,7 @@ Template.rooms.helpers({
 Template.createRoom.events = {
   "click .createRoomButton": function() {
     var newRoomName = prompt("Enter name of new chat room");
-    while (newRoomName == "") {
+    while (newRoomName == "" || newRoomName == null) {
       newRoomName = prompt("Room name must have at least 1 character. Enter name of new chat room");
     }
 
@@ -22,5 +22,13 @@ Template.room.events = {
   "click .selectRoom": function() {
     var name = this.name;
     Session.set("currentRoom", name);
+  },
+  "click .deleteRoom": function() {
+    Rooms.remove({_id: this._id});
+    var msgCursor = Messages.find({room: this.name})
+    .forEach(function(msg){
+      //console.log(msg._id);
+      Messages.remove({_id:msg._id});
+    });
   }
 }

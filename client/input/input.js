@@ -27,9 +27,13 @@ Template.input.events = {
     }
   },
   "click .hideAll": function() {
-    Messages.update({room: Session.get("currentRoom")}, {$set: {hideChildren: true}});
+    var msgs = Messages.find({room: Session.get("currentRoom")}).forEach(function(msg) {
+      Messages.update({_id:msg._id}, {$set: {hideChildren: true}});
+    })
   },
   "click .openAll": function() {
-    Messages.update({room: Session.get("currentRoom")}, {$set: {hideChildren: false}});
+    var msgs = Messages.find({room: Session.get("currentRoom")}).forEach(function(msg) {
+      Messages.update({_id:msg._id}, {$set: {hideChildren: false}});
+    })
   }
 }
