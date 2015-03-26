@@ -5,9 +5,9 @@
 </template>
 
 <template name="rooms">
-    {{#each chatrooms}}
-      {{> room}}
-    {{/each}}
+  {{#each chatrooms}}
+  {{> room}}
+  {{/each}}
 </template>
 
 <template name="room">
@@ -15,7 +15,30 @@
     <i class="fa fa-cloud"></i> {{name}}
     <button class="selectRoom">Join</button>
     {{#if canDelete}}
-      <button class="deleteRoom">Delete</button>
+    <button class="deleteRoom">Delete</button>
     {{/if}}
   </p>
+</template>
+
+<template name="roomDisplay">
+  <p>
+    Room: {{currentRoom}}
+  </p>
+  <button class="leaveRoom">Leave Room</button><br/>
+  <hr>
+  <p>
+    Users:
+  </p>
+  {{#each usersInRoom}}
+  {{> userRoomDisplay}}
+  {{/each}}
+</template>
+
+<template name="userRoomDisplay">
+  <p>
+    {{userName}}
+  </p>
+  <!-- {{#if canKick}}
+  <button class="kickUser">Kick</button>
+  {{/if}} -->
 </template>

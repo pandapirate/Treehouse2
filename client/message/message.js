@@ -31,6 +31,7 @@ Template.msg.events({
   "click .response": function() {
     //console.log(this._id + " " + this.message);
     Session.set("responseID", this._id);
+    Meteor.setTimeout(function(){document.getElementById('ResponseMessage').focus();}, 200);
   },
   'keydown #ResponseMessage' : function (event) {
     if (event.which == 13) { // 13 is the enter key event
@@ -38,7 +39,11 @@ Template.msg.events({
       if (message.value != '') {
         var name = "Squirrel";
         if (Meteor.user()) {
-          name = Meteor.user().profile.name;
+          if (Meteor.user().hasOwnProperty('username')) {
+            name = Meteor.user().username;
+          } else {
+            name = Meteor.user().profile.name;
+          }
         }
 
         var id = Messages.insert({
@@ -64,7 +69,11 @@ Template.msg.events({
     if (message.value != '') {
       var name = "Squirrel";
       if (Meteor.user()) {
-        name = Meteor.user().profile.name;
+        if (Meteor.user().hasOwnProperty('username')) {
+          name = Meteor.user().username;
+        } else {
+          name = Meteor.user().profile.name;
+        }
       }
 
       var id = Messages.insert({

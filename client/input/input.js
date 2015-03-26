@@ -3,7 +3,11 @@ Template.input.events = {
     if (event.which == 13) { // 13 is the enter key event
       var name = "Squirrel";
       if (Meteor.user()) {
-        name = Meteor.user().profile.name;
+        if (Meteor.user().hasOwnProperty('username')) {
+          name = Meteor.user().username;
+        } else {
+          name = Meteor.user().profile.name;
+        }
       }
       var message = document.getElementById('message');
 

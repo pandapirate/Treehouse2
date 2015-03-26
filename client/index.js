@@ -5,16 +5,22 @@ Template.body.helpers({
     }
     return false;
   },
-  currentRoom: function() {
-    return Session.get("currentRoom");
-  },
   currentUser: function() {
     return Meteor.user() != null;
   }
 })
 
-Template.body.events = {
-  "click .leaveRoom": function() {
-    Session.set("currentRoom", null);
+
+Template.welcome.helpers({
+  currentUserName: function() {
+    if (Meteor.user().hasOwnProperty('username')) {
+      return Meteor.user().username;
+    } else {
+      return Meteor.user().profile.name;
+    }
   }
-}
+})
+
+Accounts.ui.config({
+  passwordSignupFields: "USERNAME_ONLY"
+});

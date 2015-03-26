@@ -32,13 +32,60 @@ Template.room.events = {
   "click .selectRoom": function() {
     var name = this.name;
     Session.set("currentRoom", name);
+    UserRoom.insert({
+      userID: Meteor.user()._id,
+      roomID: this._id
+    });
   },
   "click .deleteRoom": function() {
     Rooms.remove({_id: this._id});
-    var msgCursor = Messages.find({room: this.name})
+    Messages.find({room: this.name})
     .forEach(function(msg){
       //console.log(msg._id);
       Messages.remove({_id:msg._id});
     });
+
+    UserRoom.find({roomID: this._id})
+    .forEach(function(usrRm) {
+      UserRoom.remove({_id:usrRm._id});
+    });
   }
 }
+
+Template.roomDisplay.helpers({
+  currentRoom: function() {
+    return Session.get("currentRoom");
+  },
+  usersInRoom: function() {
+    if (Session.get("currentRoom") == null) return [];
+    var room = Rooms.findOne({name: Session.get("currentRoom")});
+    var idList = [];
+    UserRoom.find({roomID: room._id})
+    .forEach(function(rm) {
+      idList.push(rm.userID)
+    });
+    return Meteor.users.find({_id: {$in: idList}});
+  }
+})
+
+Template.roomDisplay.events = {
+  "click .leaveRoom": function() {
+    var room = Rooms.findOne({name: Session.get("currentRoom")})
+    var usrRm = UserRoom.findOne({roomID: room._id});
+    UserRoom.remove({_id: usrRm._id})
+    Session.set("currentRoom", null);
+  }
+}
+
+Template.userRoomDisplay.helpers({
+  userName: function() {
+    if (this.hasOwnProperty('username')) {
+      return this.username;
+    } else {
+      return this.profile.name;
+    }
+  },
+  canKick: function() {
+    return this._id != Meteor.user()._id;
+  }
+})

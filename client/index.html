@@ -11,10 +11,7 @@
     {{> welcome }}
 
     {{#if selectedRoom}}
-      <p>
-        Room: {{currentRoom}}
-      </p>
-      <button class="leaveRoom">Leave Room</button><br/><br>
+      {{> roomDisplay}}
       {{> messages }}
       {{> input }}
     {{else}}
@@ -33,7 +30,7 @@
 <template name="welcome">
   {{#if currentUser}}
   <p>
-    Welcome {{currentUser.profile.name}}
+    Welcome {{currentUserName}}
   </p>
   {{else}}
   <p>
