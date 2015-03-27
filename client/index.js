@@ -7,6 +7,9 @@ Template.body.helpers({
   },
   currentUser: function() {
     return Meteor.user() != null;
+  },
+  catRoom: function() {
+    return Session.get("currentRoom") == "Secret Room";
   }
 })
 

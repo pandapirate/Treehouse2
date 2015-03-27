@@ -31,11 +31,29 @@ Template.room.helpers({
 Template.room.events = {
   "click .selectRoom": function() {
     var name = this.name;
+
+    var userName = "";
+    if (Meteor.user() != null) {
+      if (Meteor.user().hasOwnProperty('username')) {
+        userName = Meteor.user().username;
+      } else {
+        userName = Meteor.user().profile.name;
+      }
+    }
+
+    if (name == "Secret Room" && userName.indexOf("cat") < 0) {
+      alert ("Only cats allowed in the room");
+      return;
+    }
+
     Session.set("currentRoom", name);
-    UserRoom.insert({
-      userID: Meteor.user()._id,
-      roomID: this._id
-    });
+
+    if (Meteor.user() != null) {
+      UserRoom.insert({
+        userID: Meteor.user()._id,
+        roomID: this._id
+      });
+    }
   },
   "click .deleteRoom": function() {
     Rooms.remove({_id: this._id});
@@ -72,7 +90,10 @@ Template.roomDisplay.events = {
   "click .leaveRoom": function() {
     var room = Rooms.findOne({name: Session.get("currentRoom")})
     var usrRm = UserRoom.findOne({roomID: room._id});
-    UserRoom.remove({_id: usrRm._id})
+
+    if (usrRm != null) {
+      UserRoom.remove({_id: usrRm._id});
+    }
     Session.set("currentRoom", null);
   }
 }
